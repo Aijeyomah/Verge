@@ -20,6 +20,11 @@ const isValidEmail = (email) => {
     } return true;
   };
 
+  const passwordCompare = (hashedPassword, password)=>{
+    return bcrypt.compareSync(password, hashedPassword)
+  }
+
+
 const generateUserToken = (email, id, first_name, last_name, state) => {
     const key= process.env.SECRET_KEY
     const token = jwt.sign({
@@ -33,10 +38,13 @@ const generateUserToken = (email, id, first_name, last_name, state) => {
     return token;
   };
 
-module.exports = {
+
+
+  module.exports = {
     hashPassword,
     isValidEmail,
     validatePassword,
-    generateUserToken
+    generateUserToken,
+    passwordCompare
 }
 

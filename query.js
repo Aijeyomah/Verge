@@ -8,7 +8,10 @@ const queries={
         state,
         created_at,
         updated_at
-    ) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`
-}
+    ) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+    userSigninQuery :`SELECT * FROM users WHERE email = $1`
+  }
+  
+
 
 module.exports= queries

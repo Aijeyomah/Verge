@@ -6,6 +6,8 @@ const {
   generateUserToken,
   isValidEmail,
   validatePassword,
+  passwordCompare
+
 } = require("../validation");
 
 exports.createUser = async (req, res, next) => {
@@ -63,3 +65,76 @@ exports.createUser = async (req, res, next) => {
     next(error);
   }
 };
+  exports.userSignin = async(req, res)=>{
+    const {  email, password } = req.body;
+    if ( !email ||!password) {
+      return res.status(400).json({
+        message: "Please fill all fields",
+      });
+    }
+    if (!isValidEmail(email)) {
+      return res.status(400).json({
+        message: "please put in a valid email",
+      });
+    }
+    if (!validatePassword(password)) {
+      return res.status(400).json({
+        message: "Invalid Password",
+      });
+    }
+
+    const queryObject = {
+      text: queries.userSigninQuery,
+      values: [ email]
+    }
+
+    try{
+      const {rows} = await db.query(queryObject);
+      const dbresponse = rows[0]
+      if(!dbresponse){
+        res.status(400).json({
+          message: "error login in",
+          dbresponse
+        });
+      }
+
+      if(!dbresponse){
+        res.status(400).json({
+          message: "error login in",
+          dbresponse
+        });
+      } 
+
+      if(!passwordCompare(dbresponse.password, password)){
+        res.status(400).json({
+          message: "incorrect password",
+          dbresponse
+        });
+      } 
+       
+      const tokens =   generateUserToken(
+        dbresponse.id,
+       
+        dbresponse.email
+       
+      );
+      const data = {
+        token: tokens,
+        dbresponse,
+      };
+      res.status(201).json({
+        message: "login Successfully",
+        data,
+      });
+      }
+     
+    catch (error) {
+      console.log(error);
+      res.status(404).json({
+        message: "error login in",
+       
+      });
+    }
+    }
+  
+    

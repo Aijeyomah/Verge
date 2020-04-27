@@ -7,26 +7,30 @@ const queries = {
         password,
         state,
         created_at,
-        updated_at
-    ) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+        updated_at,
+        is_admin
+    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
   userSigninQuery: `SELECT * FROM users WHERE email = $1`,
-  orderParcelQuery: ` INSERT INTO parcelorders(
+  orderParcelQuery: ` INSERT INTO orderparcel(
+    user_id,
      sender_name, 
-     user_name,
       price, 
       weight, 
       location,
        destination,
         sender_note, 
         status,
-        created_at
-         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
-  getUserOrderByUserName: `SELECT * FROM parcelorders WHERE user_name  = $1`,
-  getUserOrderById: `SELECT * FROM parcelorders WHERE id = $1`,
+        created_at,
+        updated_at
+         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
+  getUserOrderById: `SELECT * FROM orderparcel WHERE id = $1`,
+  getUserOrder: `SELECT * FROM orderparcel `,
 
-  updateOrderDestination: `UPDATE parcelorders
-          SET destination = $1 WHERE id =$2 returning *`,
-  deleteParcelOrder: `DELETE FROM parcelorders WHERE id=$1`
+
+  updateOrderDestination: `UPDATE orderparcel SET destination=($1), updated_at=($2) WHERE id=($3)`,
+  deleteParcelOrder: `DELETE FROM  orderparcel WHERE id=$1`,
+  updateOrderLocation: `UPDATE orderparcel SET location=($1), updated_at=($2) WHERE id=($3)`,
+  updateOrderStatus: `UPDATE orderparcel SET status=($1), updated_at=($2) WHERE id=($3)`
 };
 
 module.exports = queries;

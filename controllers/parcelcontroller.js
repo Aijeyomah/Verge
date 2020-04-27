@@ -5,7 +5,7 @@ const db = require("../database")
 exports.placeOrderForParcel = async (req, res) => {
     const date = new Date();
     const created_at = moment(date).format('YYYY-MM-DD HH:mm:ss');
-    const { user_id, sender_name, price, weight, location, destination, sender_note, status } = req.body;
+    const { user_id, sender_name, price, weight, location, destination, sender_note } = req.body;
     if (!sender_name  || !price || !weight || !location || !destination || !sender_note) {
         res.status(404).json({
             message: "Please fill the necessary credentials"
@@ -13,7 +13,7 @@ exports.placeOrderForParcel = async (req, res) => {
     }
     const queryObject = {
         text: queries.orderParcelQuery,
-        values: [user_id, sender_name, price, weight, location, destination, sender_note, status, created_at, created_at]
+        values: [user_id, sender_name, price, weight, location, destination, sender_note,  created_at, created_at]
 
 
     }
@@ -66,7 +66,7 @@ exports.getUserParcel = async ( req,res) => {
     try {
         const { rows, rowCount } = await db.query(queryObject)
         if (rowCount > 0) {
-            return res.status(200).json({ message: "This is your order by id", data: rows[3] })
+            return res.status(200).json({ message: "This is your order by id", data: rows })
         }
         if (rowCount === 0) {
             return res.status(400).json({ message: "there is no id found" })

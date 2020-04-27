@@ -21,6 +21,8 @@ router.post("/parcel", placeOrderForParcel);
 //get
 router.get("/parcel/:id", getUserParcelById);
 router.get("/parcel", getUserParcel);
+router.get("/parcels", verifyToken, getUserParcel);
+
 
 //put
 router.put("/parcel/destination/change/:id", updateDestinationByUserId);

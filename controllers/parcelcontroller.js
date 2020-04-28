@@ -105,7 +105,7 @@ exports.updateDestinationByUserId = async (req, res) => {
             return res.status(500).json({ message: "parcel with id not found" })
         }
         if (rowCount > 0) {
-            return res.status(200).json({ message: "parcel updated successfully" })
+            return res.status(200).json({ message: "Destination successfully" })
         }
     } catch (error) {
         res.status(400).json({ message: "error finding id" })

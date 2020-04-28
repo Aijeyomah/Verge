@@ -29,6 +29,6 @@ router.put("/parcel/destination/change/:id",verifyUserToken, updateDestinationBy
 router.put("/parcel/location/change/:id",verifyToken, updateLocationByAdmin);
 router.put("/parcel/status/change/:id", verifyToken, updateStatusByAdmin);
 
-router.put("/parcel/destination/delete/:id",verifyUserToken, cancelDeliveryOrder);
+router.put("/parcel/delete/:id",verifyUserToken, cancelDeliveryOrder);
 
 module.exports = router;

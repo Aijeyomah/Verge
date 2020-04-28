@@ -11,10 +11,10 @@ const {
 } = require("../validation");
 
 exports.createAdmin =async ( req, res) =>{
- const { first_name, last_name, email, password, state,is_admin } = req.body;
+ const { first_name, last_name, email, password, state} = req.body;
 
  
- const isAdmin = true;
+ const is_admin = true;
  const date = new Date();
   const created_at = moment(date).format("YYYY-MM-DD HH:mm:ss");
     
@@ -50,7 +50,7 @@ if (!first_name || !last_name || !email || !state || !password) {
       state,
       created_at,
       created_at,
-      isAdmin
+      is_admin
     ],
   };
   try {
@@ -62,7 +62,7 @@ if (!first_name || !last_name || !email || !state || !password) {
       dbresponse.last_name,
       dbresponse.email,
       dbresponse.state,
-      dbresponse.isAdmin
+      dbresponse.is_admin
     );
     const data = {
       token: tokens,

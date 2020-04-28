@@ -17,14 +17,10 @@ exports.createUser = async (req, res, next) => {
 
   const date = new Date();
   const created_at = moment(date).format("YYYY-MM-DD HH:mm:ss");
-  const { first_name, last_name, email, password, state, is_admin } = req.body;
-  const isAdmin = false;
-
-  if (is_admin === true) {
-    return res.status(400).json({
-      message: "you are unauthorized",
-    })
-  }
+  const { first_name, last_name, email, password, state } = req.body;
+  
+ const is_admin = false
+  
 
 
   if (!first_name || !last_name || !email || !state || !password) {
@@ -53,9 +49,10 @@ exports.createUser = async (req, res, next) => {
       state,
       created_at,
       created_at,
-      isAdmin
+      is_admin
+      
 
-    ],
+    ]
   };
   try {
     const { rows } = await db.query(queryObject);
@@ -66,7 +63,8 @@ exports.createUser = async (req, res, next) => {
       dbresponse.last_name,
       dbresponse.email,
       dbresponse.state,
-      dbresponse.isAdmin
+      dbresponse.is_admin
+      
     );
     const data = {
       token: tokens,
@@ -101,12 +99,13 @@ exports.userSignin = async (req, res) => {
 
   const queryObject = {
     text: queries.userSigninQuery,
-    values: [email]
+    values: [email, ]
   }
 
   try {
     const { rows } = await db.query(queryObject);
     const dbresponse = rows[0]
+    
     if (!dbresponse) {
       res.status(400).json({
         message: "error login in",
@@ -130,9 +129,12 @@ exports.userSignin = async (req, res) => {
 
     const tokens = generateUserToken(
       dbresponse.id,
-
-      dbresponse.email
-
+      dbresponse.first_name,
+      dbresponse.last_name,
+      dbresponse.email,
+      dbresponse.state,
+      dbresponse.isAdmin
+    
     );
     const data = {
       token: tokens,

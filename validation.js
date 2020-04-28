@@ -25,14 +25,15 @@ const isValidEmail = (email) => {
   }
 
 
-const generateUserToken = (email, id, first_name, last_name, state) => {
+const generateUserToken = (email, id, first_name, last_name, state, is_admin) => {
     const key= process.env.SECRET_KEY
     const token = jwt.sign({
       email,
       user_id: id,
       first_name,
       last_name,
-      state
+      state,
+      is_admin
     },
     key,{ expiresIn: '3d' });
     return token;

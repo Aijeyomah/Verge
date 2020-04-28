@@ -6,6 +6,9 @@ exports.placeOrderForParcel = async (req, res) => {
     const date = new Date();
     const created_at = moment(date).format('YYYY-MM-DD HH:mm:ss');
     const { user_id, sender_name, price, weight, location, destination, sender_note } = req.body;
+
+    const status = "pending"
+    
     if (!sender_name  || !price || !weight || !location || !destination || !sender_note) {
         res.status(404).json({
             message: "Please fill the necessary credentials"
@@ -13,10 +16,11 @@ exports.placeOrderForParcel = async (req, res) => {
     }
     const queryObject = {
         text: queries.orderParcelQuery,
-        values: [user_id, sender_name, price, weight, location, destination, sender_note,  created_at, created_at]
+        values: [user_id, sender_name, price, weight, location, destination,  status,sender_note,  created_at, created_at]
 
 
     }
+
     const { rowCount } = await db.query(queryObject);
 
     try {

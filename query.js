@@ -18,10 +18,11 @@ const queries = {
       weight, 
       location,
        destination,
+       status,
         sender_note, 
         created_at,
         updated_at
-         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
+         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
   getUserOrderById: `SELECT * FROM orderparcel WHERE id = $1`,
   getUserOrder: `SELECT * FROM orderparcel `,
 

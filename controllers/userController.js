@@ -19,7 +19,7 @@ exports.createUser = async (req, res, next) => {
   const created_at = moment(date).format("YYYY-MM-DD HH:mm:ss");
   const { first_name, last_name, email, password, state } = req.body;
   
- const is_admin = false
+ const admin_type = 'user'
   
 
 
@@ -49,23 +49,24 @@ exports.createUser = async (req, res, next) => {
       state,
       created_at,
       created_at,
-      is_admin
+     admin_type
       
 
     ]
   };
   try {
-    const { rows } = await db.query(queryObject);
+    const { rows , rowCount} = await db.query(queryObject);
     const dbresponse = rows[0];
     const tokens = generateUserToken(
       dbresponse.id,
       dbresponse.first_name,
       dbresponse.last_name,
       dbresponse.email,
-      dbresponse.state,
-      dbresponse.is_admin
+     dbresponse.is_admin,
+     dbresponse.state
       
     );
+    delete dbresponse.password
     const data = {
       token: tokens,
       dbresponse,
@@ -99,13 +100,16 @@ exports.userSignin = async (req, res) => {
 
   const queryObject = {
     text: queries.userSigninQuery,
-    values: [email, ]
+    values: [email ]
   }
 
   try {
-    const { rows } = await db.query(queryObject);
+    const { rows, rowCount} = await db.query(queryObject);
     const dbresponse = rows[0]
-    
+    if (rowCount === 0) {
+      return res.status(400).json({ message: "user does not exit" })
+  }
+  if (rowCount > 0) {
     if (!dbresponse) {
       res.status(400).json({
         message: "error login in",
@@ -132,26 +136,32 @@ exports.userSignin = async (req, res) => {
       dbresponse.first_name,
       dbresponse.last_name,
       dbresponse.email,
-      dbresponse.state,
-      dbresponse.isAdmin
+      dbresponse.isAdmin,
+      dbresponse.state
+      
     
     );
     const data = {
-      token: tokens,
-      dbresponse,
+      token: tokens
+     
     };
     res.status(201).json({
       message: "login Successfully",
-      data,
+      data
+     
     });
   }
 
-  catch (error) {
-    console.log(error);
-    res.status(404).json({
-      message: "error login in",
+ 
+}
+catch (error) {
+  console.log(error);
+  res.status(404).json({
+    message: "error login in",
 
-    });
-  }
+  });
 }
 
+}
+    
+   

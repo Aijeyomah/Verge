@@ -3,7 +3,7 @@ const router = express.Router();
 const user = require("./controllers/userController");
 const { createUser, userSignin } = user;
 const { verifyToken, verifyUserToken } = require("./verifyAuth");
-const { createAdmin, updateUserToAdmin } = require("./controllers/isAdminController");
+const {  updateUserToAdmin } = require("./controllers/isAdminController");
 const {
     placeOrderForParcel,
     getUserParcelById,

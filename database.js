@@ -14,9 +14,7 @@ const pool = new Pool({
   
 });
 pool.on("connect", () => {
-  console.log("connected to db successfully");
 });
 pool.on("error", (err) => {
-  console.log("could not connect to database", err);
 });
 module.exports = pool;

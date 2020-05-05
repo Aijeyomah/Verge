@@ -49,4 +49,3 @@ module.exports = {
   generateUserToken,
   passwordCompare
 }
-

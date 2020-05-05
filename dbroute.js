@@ -15,7 +15,6 @@ const {
 } = require("./controllers/parcelcontroller");
 
 router.post("/auth/signup", createUser);
-router.post("/auth/signupadmin", verifyToken, createAdmin);
 router.post("/auth/login", userSignin);
 router.post("/parcel",verifyUserToken, placeOrderForParcel);
 //get

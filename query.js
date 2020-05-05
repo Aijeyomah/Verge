@@ -31,7 +31,9 @@ const queries = {
   deleteParcelOrder: `DELETE FROM  orderparcel WHERE id=$1`,
   updateOrderLocation: `UPDATE orderparcel SET location=($1), updated_at=($2) WHERE id=($3)`,
   updateOrderStatus: `UPDATE orderparcel SET status=($1), updated_at=($2) WHERE id=($3)`,
-  getParcelStatus:`SELECT status FROM orderparcel WHERE id = $1`
+  getParcelStatus:`SELECT status FROM orderparcel WHERE id = $1`,
+  getUserId:`SELECT user_id FROM orderparcel WHERE id = $1`
+
 };
 
 module.exports = queries;

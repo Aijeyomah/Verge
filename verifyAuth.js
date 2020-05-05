@@ -13,7 +13,7 @@ const verifyToken = async (req, res, next) => {
         console.log(decoded)
         req.user = decoded
         if (decoded.admin_type === 'user') {
-            return res.status(403).json({ message: "You arenot an admin" })
+            return res.status(403).json({ message: "You are not an admin" })
         }
         next();
     } catch (error) {
@@ -31,7 +31,7 @@ const verifyUserToken = async (req, res, next) => {
 
         req.user = decoded
 
-        if (decoded.admin_type === 'admin') {
+        if (decoded.admin_type === 'Admin') {
             return res.status(400).json({ message: "You are unauthorized user" })
         }
         next();

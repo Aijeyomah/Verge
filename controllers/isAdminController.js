@@ -103,7 +103,7 @@ exports.updateUserToAdmin = async (req, res)=>{
   };
   try {
     const { rows,rowCount } = await db.query(queryObject);
-    const dbresponse = rows[0];
+   
     if(rowCount===0){
       res.status(400).json({
         message: "user not found",

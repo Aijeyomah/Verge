@@ -62,7 +62,7 @@ exports.createUser = async (req, res, next) => {
       dbresponse.first_name,
       dbresponse.last_name,
       dbresponse.email,
-     dbresponse.is_admin,
+     dbresponse.admin_type,
      dbresponse.state
       
     );
@@ -136,7 +136,7 @@ exports.userSignin = async (req, res) => {
       dbresponse.first_name,
       dbresponse.last_name,
       dbresponse.email,
-      dbresponse.isAdmin,
+      dbresponse.admin_type,
       dbresponse.state
       
     
